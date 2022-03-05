@@ -1,0 +1,35 @@
+{
+  "canisters": {
+    "icstreaming": {
+      "main": "src/icstreaming/main.mo",
+      "type": "motoko"
+    },
+    "icstreaming_assets": {
+      "dependencies": [
+        "icstreaming"
+      ],
+      "frontend": {
+        "entrypoint": "src/icstreaming_assets/src/index.html"
+      },
+      "source": [
+        "src/icstreaming_assets/assets",
+        "dist/icstreaming_assets/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "dfx": "0.9.2",
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  },
+  "version": 1
+}
