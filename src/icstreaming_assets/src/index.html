@@ -10,13 +10,24 @@
   </head>
   <body>
     <main>
-      <img src="logo.png" alt="DFINITY logo" />
-      <form action="#">
-        <label for="name">Enter your name: &nbsp;</label>
-        <input id="name" alt="Name" type="text" />
-        <button type="submit">Click Me!</button>
-      </form>
-      <section id="greeting"></section>
+      <section>
+        <h1>Upload an image</h1>
+        <input
+          type="file"
+          accept="image/x-png,image/jpeg,image/gif,image/svg+xml,image/webp"
+        />
+        <button>Upload</button>
+      </section>
+
+      <section style="background: lightsalmon">
+        <h1>Preview (local)</h1>
+        <img id="local" />
+      </section>
+
+      <section style="background: lightblue">
+        <h1>Result (uploaded)</h1>
+        <img id="ic" />
+      </section>
     </main>
   </body>
 </html>
