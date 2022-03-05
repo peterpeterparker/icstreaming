@@ -166,4 +166,12 @@ actor Main {
         };
     };
 
+    /**
+     * Test
+     **/
+
+     public shared query func getAsset(fullPath: Text): async Result.Result<Asset, Text> {
+       return storageStore.getAsset(fullPath, null);
+     }
+
 };

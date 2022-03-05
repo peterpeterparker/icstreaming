@@ -25,6 +25,11 @@ type StreamingCallbackHttpResponse =
    body: vec nat8;
    token: opt StreamingCallbackToken__1;
  };
+type Result = 
+ variant {
+   err: text;
+   ok: Asset;
+ };
 type HttpResponse = 
  record {
    body: vec nat8;
@@ -54,12 +59,34 @@ type Chunk =
    batchId: nat;
    content: vec nat8;
  };
+type AssetKey__1 = 
+ record {
+   folder: text;
+   fullPath: text;
+   name: text;
+   token: opt text;
+ };
 type AssetKey = 
  record {
    folder: text;
    fullPath: text;
    name: text;
    token: opt text;
+ };
+type AssetEncoding = 
+ record {
+   contentChunks: vec vec nat8;
+   modified: int;
+   totalLength: nat;
+ };
+type Asset = 
+ record {
+   encoding: AssetEncoding;
+   headers: vec record {
+                  text;
+                  text;
+                };
+   key: AssetKey__1;
  };
 service : {
   commitUpload:
@@ -68,6 +95,7 @@ service : {
       chunkIds: vec nat;
       headers: vec HeaderField__1;
     }) -> ();
+  getAsset: (text) -> (Result) query;
   http_request: (HttpRequest) -> (HttpResponse) query;
   http_request_streaming_callback: (StreamingCallbackToken) ->
    (StreamingCallbackHttpResponse) query;

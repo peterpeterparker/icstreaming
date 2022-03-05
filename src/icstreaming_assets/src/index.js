@@ -5,16 +5,22 @@ const displayResultImg = (url) => {
   img.src = url;
 };
 
+const setFullPath = (url) => {
+  const input = document.querySelector('input[type="text"]');
+  input.value = url;
+}
+
 const uploadChunk = async ({ batchId, chunk }) =>
   icstreaming.uploadChunk({
     batchId,
     content: [...new Uint8Array(await chunk.arrayBuffer())],
   });
 
-const encodeFilename = (filename) => encodeURI(filename.toLowerCase().replace(/\s/g, '-'));
+const encodeFilename = (filename) =>
+  encodeURI(filename.toLowerCase().replace(/\s/g, "-"));
 
 const upload = async () => {
-  const input = document.querySelector("input");
+  const input = document.querySelector('input[type="file"]');
 
   const file = input?.files[0];
 
@@ -74,22 +80,38 @@ const upload = async () => {
   displayResultImg(
     `http://${process.env.ICSTREAMING_CANISTER_ID}.localhost:8000${fullPath}`
   );
+
+  setFullPath(fullPath);
 };
 
 const previewImg = () => {
-  const input = document.querySelector("input");
+  const input = document.querySelector('input[type="file"]');
   const img = document.querySelector("img#local");
 
   input.oninput = () => {
     img.src = window.URL.createObjectURL(input.files[0]);
-  }
+  };
+};
+
+const initUpload = () => {
+  const button = document.querySelector("button#upload");
+  button.addEventListener("click", upload);
+}
+
+const testAsset = async () => {
+  const input = document.querySelector('input[type="text"]');
+  console.log(await icstreaming.getAsset(input.value));
+}
+
+const initAsset = () => {
+  const button = document.querySelector("button#asset");
+  button.addEventListener("click", testAsset);
 }
 
 const init = () => {
-  const button = document.querySelector("button");
-  button.addEventListener("click", upload);
-
+  initUpload();
   previewImg();
+  initAsset();
 };
 
 document.addEventListener("DOMContentLoaded", init);

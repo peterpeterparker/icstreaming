@@ -54,6 +54,18 @@ type Chunk =
    batchId: nat;
    content: vec nat8;
  };
+type Batch = 
+ record {
+   expiresAt: int;
+   key: AssetKey__1;
+ };
+type AssetKey__1 = 
+ record {
+   folder: text;
+   fullPath: text;
+   name: text;
+   token: opt text;
+ };
 type AssetKey = 
  record {
    folder: text;
@@ -68,6 +80,7 @@ service : {
       chunkIds: vec nat;
       headers: vec HeaderField__1;
     }) -> ();
+  getBatch: (nat) -> (opt Batch) query;
   http_request: (HttpRequest) -> (HttpResponse) query;
   http_request_streaming_callback: (StreamingCallbackToken) ->
    (StreamingCallbackHttpResponse) query;

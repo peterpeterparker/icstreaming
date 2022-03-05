@@ -1,5 +1,21 @@
 import type { Principal } from '@dfinity/principal';
+export interface Asset {
+  'key' : AssetKey__1,
+  'encoding' : AssetEncoding,
+  'headers' : Array<[string, string]>,
+}
+export interface AssetEncoding {
+  'modified' : bigint,
+  'totalLength' : bigint,
+  'contentChunks' : Array<Array<number>>,
+}
 export interface AssetKey {
+  'token' : [] | [string],
+  'name' : string,
+  'fullPath' : string,
+  'folder' : string,
+}
+export interface AssetKey__1 {
   'token' : [] | [string],
   'name' : string,
   'fullPath' : string,
@@ -20,6 +36,8 @@ export interface HttpResponse {
   'streaming_strategy' : [] | [StreamingStrategy],
   'status_code' : number,
 }
+export type Result = { 'ok' : Asset } |
+  { 'err' : string };
 export interface StreamingCallbackHttpResponse {
   'token' : [] | [StreamingCallbackToken__1],
   'body' : Array<number>,
@@ -52,6 +70,7 @@ export interface _SERVICE {
         'batchId' : bigint,
       },
     ) => Promise<undefined>,
+  'getAsset' : (arg_0: string) => Promise<Result>,
   'http_request' : (arg_0: HttpRequest) => Promise<HttpResponse>,
   'http_request_streaming_callback' : (
       arg_0: StreamingCallbackToken,

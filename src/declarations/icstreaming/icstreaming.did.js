@@ -1,5 +1,22 @@
 export const idlFactory = ({ IDL }) => {
   const HeaderField__1 = IDL.Tuple(IDL.Text, IDL.Text);
+  const AssetKey__1 = IDL.Record({
+    'token' : IDL.Opt(IDL.Text),
+    'name' : IDL.Text,
+    'fullPath' : IDL.Text,
+    'folder' : IDL.Text,
+  });
+  const AssetEncoding = IDL.Record({
+    'modified' : IDL.Int,
+    'totalLength' : IDL.Nat,
+    'contentChunks' : IDL.Vec(IDL.Vec(IDL.Nat8)),
+  });
+  const Asset = IDL.Record({
+    'key' : AssetKey__1,
+    'encoding' : AssetEncoding,
+    'headers' : IDL.Vec(IDL.Tuple(IDL.Text, IDL.Text)),
+  });
+  const Result = IDL.Variant({ 'ok' : Asset, 'err' : IDL.Text });
   const HeaderField = IDL.Tuple(IDL.Text, IDL.Text);
   const HttpRequest = IDL.Record({
     'url' : IDL.Text,
@@ -59,6 +76,7 @@ export const idlFactory = ({ IDL }) => {
         [],
         [],
       ),
+    'getAsset' : IDL.Func([IDL.Text], [Result], ['query']),
     'http_request' : IDL.Func([HttpRequest], [HttpResponse], ['query']),
     'http_request_streaming_callback' : IDL.Func(
         [StreamingCallbackToken],
