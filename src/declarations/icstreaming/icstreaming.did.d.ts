@@ -1,4 +1,6 @@
 import type { Principal } from '@dfinity/principal';
+import type { ActorMethod } from '@dfinity/agent';
+
 export interface Asset {
   'key' : AssetKey__1,
   'encoding' : AssetEncoding,
@@ -63,18 +65,22 @@ export type StreamingStrategy = {
     }
   };
 export interface _SERVICE {
-  'commitUpload' : (
-      arg_0: {
+  'commitUpload' : ActorMethod<
+    [
+      {
         'headers' : Array<HeaderField__1>,
         'chunkIds' : Array<bigint>,
         'batchId' : bigint,
       },
-    ) => Promise<undefined>,
-  'getAsset' : (arg_0: string) => Promise<Result>,
-  'http_request' : (arg_0: HttpRequest) => Promise<HttpResponse>,
-  'http_request_streaming_callback' : (
-      arg_0: StreamingCallbackToken,
-    ) => Promise<StreamingCallbackHttpResponse>,
-  'initUpload' : (arg_0: AssetKey) => Promise<{ 'batchId' : bigint }>,
-  'uploadChunk' : (arg_0: Chunk) => Promise<{ 'chunkId' : bigint }>,
+    ],
+    undefined,
+  >,
+  'getAsset' : ActorMethod<[string], Result>,
+  'http_request' : ActorMethod<[HttpRequest], HttpResponse>,
+  'http_request_streaming_callback' : ActorMethod<
+    [StreamingCallbackToken],
+    StreamingCallbackHttpResponse,
+  >,
+  'initUpload' : ActorMethod<[AssetKey], { 'batchId' : bigint }>,
+  'uploadChunk' : ActorMethod<[Chunk], { 'chunkId' : bigint }>,
 }
